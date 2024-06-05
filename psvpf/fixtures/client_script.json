@@ -4,10 +4,10 @@
   "doctype": "Client Script",
   "dt": "Purchase Order",
   "enabled": 1,
-  "modified": "2024-06-03 02:49:53.109515",
+  "modified": "2024-06-05 17:03:37.474804",
   "module": "PSVPF",
   "name": "Notify",
-  "script": "frappe.ui.form.on('Purchase Order', {\r\n\trefresh(frm) {\r\n\t\t// your code here\r\n\t\tfrm.add_custom_button(__(\"Notify\"), function() {\r\n\t\t\tfrappe.call({\r\n\t\t\t\tmethod: \"psvpf.api.send_a_slack_message\",\r\n\t\t\t\targs: {\r\n\t\t\t\t\tpurchase_order_name: frm.docname\r\n\t\t\t\t},\r\n\t\t\t\tfreeze: true,\r\n\t\t\t\tcallback: r => {\r\n\t\t\t\t\tconsole.log(r);\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t});\r\n\t}\r\n});",
+  "script": "frappe.ui.form.on('Purchase Order', {\r\n\trefresh(frm) {\r\n\t\t// your code here\r\n\t\tfrm.add_custom_button(__(\"Notify\"), function() {\r\n\t\t\tfrappe.call({\r\n\t\t\t\tmethod: \"psvpf.api.send_a_slack_message\",\r\n\t\t\t\targs: {\r\n\t\t\t\t\tpurchase_order_name: frm.docname\r\n\t\t\t\t},\r\n\t\t\t\tfreeze: true,\r\n\t\t\t\tcallback: r => {\r\n\t\t\t\t\tconsole.log(r);\r\n\r\n\t\t\t\t\tif (r.message == \"success\") {\r\n\t\t\t\t\t\tfrappe.show_alert({\r\n\t\t\t\t\t\t\tindicator: 'green',\r\n\t\t\t\t\t\t\tmessage: __('Notification sent successfully')\r\n\t\t\t\t\t\t}, 5);\r\n\t\t\t\t\t} else {\r\n\t\t\t\t\t\tfrappe.show_alert({\r\n\t\t\t\t\t\t\tindicator: 'red',\r\n\t\t\t\t\t\t\tmessage: __('Error: Failed to send notification')\r\n\t\t\t\t\t\t}, 5);\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t});\r\n\t}\r\n});",
   "view": "Form"
  }
 ]
